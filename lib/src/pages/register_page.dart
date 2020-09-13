@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
+// Lib
 import 'package:provider/provider.dart';
 
 // Helpers
 import 'package:chat_app/src/helpers/mostrar_alerta.dart';
 
 // Services
+import 'package:chat_app/src/services/socket_service.dart';
 import 'package:chat_app/src/services/auth_service.dart';
 
 // Widgets
@@ -62,7 +64,8 @@ class __FormState extends State<_Form> {
   Widget build(BuildContext context) {
 
     final authService = Provider.of<AuthService>(context);
-    
+    final socketService = Provider.of<SocketService>(context);
+
     return Container(
       margin: EdgeInsets.only( top:40 ),
       padding: EdgeInsets.symmetric( horizontal: 50 ),
@@ -97,7 +100,7 @@ class __FormState extends State<_Form> {
               );
 
               if ( registroOk == true ){
-                // TODO: Conectar a nuestro socket server
+                socketService.connect();
                 Navigator.pushReplacementNamed(context, 'usuarios');
               } else {
                 mostrarAlerta(

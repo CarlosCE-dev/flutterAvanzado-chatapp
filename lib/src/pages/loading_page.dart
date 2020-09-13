@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Services
+import 'package:chat_app/src/services/socket_service.dart';
 import 'package:chat_app/src/services/auth_service.dart';
 
 // Pages
@@ -26,11 +27,12 @@ class LoadingPage extends StatelessWidget {
 
   Future checkLoginState( BuildContext context ) async {
     final authService = Provider.of<AuthService>(context,listen: false);
+    final socketService = Provider.of<SocketService>(context,listen: false);
 
     final autenticado = await authService.isLoggedIn();
 
     if ( autenticado ){
-      // TODO: Conectar al socket server
+      socketService.connect();
       Navigator.pushReplacement(
         context,
         PageRouteBuilder(
